@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const cors = require('koa2-cors');
 // const compose = require('koa-compose');
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
@@ -18,15 +19,22 @@ router.get("/", async ctx => {
 })
 
 // 引入 提交文章 接口
-const { login, register } = require('./controller/login');
-const { getArticles, postArticle } = require('./controller/article');
+const { login, register, getPersonInfo, getLoginStatus, logout } = require('./controller/login');
+const { getArticles, postArticle, likeArticle } = require('./controller/article');
 
-
+// 登录注册
 router.post("/register", register);
 router.post("/login", login);
+router.post("/logout", logout);
+router.post("/getLoginStatus", getLoginStatus);
+
 router.get('/users/getArticle', getArticles);
 router.post('/users/postArticle', postArticle);
+router.get('/getPersonInfo', getPersonInfo);
+// 用户点赞、收藏
+router.post('/likeArticle', likeArticle);
 
+app.use(cors());
 
 // 配置路由
 app.use(bodyParser());

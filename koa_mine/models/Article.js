@@ -2,21 +2,36 @@ const mongoose = require('mongoose');
 
 
 const ArticleSchema = mongoose.Schema({
+    // 引用
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        db: 'koa_mine'
+    },
+
     articleId: {
         type: Number,
-        require: true,
-    },
-    authorId: {
-        type: Number,
-        require: true,
+        required: true,
     },
     title: {
         type: String,
-        require: true,
+        required: true,
     },
     content: {
         type: String,
-        require: true,
+        required: true,
+    },
+    likeNum: {
+        type: Number,
+        default: 0
+    },
+    starNum: {
+        type: Number,
+        default: 0,
+    },
+    commentNum: {
+        type: Number,
+        default: 0,
     },
     date: {
         type: String,
@@ -24,4 +39,4 @@ const ArticleSchema = mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model("AllArticle", ArticleSchema, "allArticles");
+module.exports = mongoose.model("allArticle", ArticleSchema);
